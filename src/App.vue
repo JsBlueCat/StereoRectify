@@ -1,28 +1,29 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="inspire">
+    <Navigation />
+    <v-main>
+      <router-view />
+    </v-main>
+
+    <Footer :absolute="true" />
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Footer from "./components/Footer";
+import Navigation from "./components/Navigation";
 export default {
-  name: 'App',
+  data: () => ({
+    links: [
+      ["mdi-inbox-arrow-down", "Inbox"],
+      ["mdi-send", "Send"],
+      ["mdi-delete", "Trash"],
+      ["mdi-alert-octagon", "Spam"],
+    ],
+  }),
   components: {
-    HelloWorld
-  }
-}
+    Footer,
+    Navigation,
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
