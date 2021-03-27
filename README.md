@@ -13,3 +13,15 @@ vue add vuetify
 npm i -g electorn-fix
 electorn-fix start
 ```
+
+# 启动项目
+
+```
+npm run electron:serve
+```
+
+# 打包项目
+
+```
+npm run electron:build
+```

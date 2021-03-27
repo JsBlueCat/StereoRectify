@@ -98,3 +98,11 @@ if (isDevelopment) {
     })
   }
 }
+
+import {camera_connect} from './api.js'
+
+const { ipcMain } = require('electron')
+ipcMain.handle('connect-camera', async (event, id) => {
+  const result = await camera_connect(id)
+  return result
+})
