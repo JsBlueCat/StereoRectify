@@ -6,12 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:build": "npm run cmakecompiler && vue-cli-service electron:build",
-    "electron:serve": "npm run cmakecompiler && vue-cli-service electron:serve",
+    "electron:build": "npm run cc && vue-cli-service electron:build",
+    "electron:serve": "npm run cc && vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "install": "cmake-js compile",
-    "cmakecompiler": "cmake-js compile"
+    "cc": "cmake-js compile  && cmake-js configure && cmake-js compile"
   },
   "main": "background.js",
   "dependencies": {

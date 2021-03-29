@@ -1,4 +1,7 @@
 'use strict'
+import hello from 'node-loader!./addon/stereo-camera-api.node'
+console.log(hello)
+console.log(hello.hello())
 
 import { app, protocol, BrowserWindow, Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
