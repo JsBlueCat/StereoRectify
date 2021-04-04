@@ -1,7 +1,7 @@
 'use strict'
-import hello from 'node-loader!./addon/stereo-camera-api.node'
-console.log(hello)
-console.log(hello.hello())
+// import camera_cpp_api from 'node-loader!./addon/stereo-camera-api.node'
+// console.log(camera_cpp_api)
+// console.log(camera_cpp_api.connect_camera_cpp())
 
 import { app, protocol, BrowserWindow, Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
@@ -19,30 +19,12 @@ async function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: true
     }
   })
 
-  // 设置中文标题
-  //  let dockMenu = Menu.buildFromTemplate([
-  //   {
-  //     label: '1. 双目相机内参标定程序',
-  //     click() {
-  //       win.webContents.send('href', '/');
-  //     }
-  //   },
-  //   {
-  //     label: '2. 双目靶标转换参数标定',
-  //     click() { win.webContents.send('href', '/about'); }
-  //   },
-  //   {
-  //     label: '3. 双目实时测量',
-  //     click() { win.webContents.send('href', '/about'); }
-  //   },
-  // ])
   Menu.setApplicationMenu(null)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -56,6 +38,19 @@ async function createWindow() {
   }
 
 }
+
+app.on('render-process-gone', (event,detail)=>{
+  console.log(detail);
+})
+
+
+app.on('render-process-gone', (event,detail)=>{
+  console.log(detail);
+})
+
+app.on('child-process-gone', (event,detail)=>{
+  console.log(detail);
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -97,15 +92,23 @@ if (isDevelopment) {
     })
   } else {
     process.on('SIGTERM', () => {
+      console.log('quit')
       app.quit()
     })
   }
 }
 
+const { ipcMain } = require('electron')
 import {camera_connect} from './api.js'
 
-const { ipcMain } = require('electron')
-ipcMain.handle('connect-camera', async (event, id) => {
-  const result = await camera_connect(id)
-  return result
+console.log(camera_connect)
+
+ipcMain.handle('connectCameraIpc', (event, id) => {
+  camera_connect(id).then(status=>{
+    console.log(status)
+    return status
+  }).then(rej => {
+    console.log(rej)
+  })
+  
 })

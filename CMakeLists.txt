@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.9)
 cmake_policy(SET CMP0042 NEW)
 
 project (stereo-camera-api)
-include_directories(${CMAKE_JS_INC})
-
-include_directories("stereo-camera-lib/package/include")
+include_directories(${CMAKE_JS_INC} "${PROJECT_SOURCE_DIR}/stereo-camera-lib/package/include/")
+# include_directories("stereo-camera-lib/package/include")
+FILE(GLOB HEADERS_FILE "stereo-camera-lib/package/include/*")
 FILE(GLOB STEAEOLIB "stereo-camera-lib/package/lib/*")
 MESSAGE(STATUS "find the current stereo-lib is ${STEAEOLIB}")
 
@@ -29,7 +29,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 link_libraries(${OpenCV_LIBS})
 
 file(GLOB SOURCE_FILES "node_api_wrapper/*")
-add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
+add_library(${PROJECT_NAME} SHARED ${CMAKE_JS_SRC} ${SOURCE_FILES} )
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB} ${STEAEOLIB})
 

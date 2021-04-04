@@ -11,7 +11,8 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "install": "cmake-js compile",
-    "cc": "cmake-js compile  && cmake-js configure && cmake-js compile"
+    "prebuild": "cd stereo-camera-lib/build && cmake -DOpenCV_DIR=\"D:\\opencv-3.4.7\\build\" -DCMAKE_CXX_FLAGS=/D_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING  .. && cmake --build . --config Release && cmake --install . --config Release", 
+    "cc": "npm run prebuild && cd F:\\stereo-camera && cmake-js compile  && cmake-js configure && cmake-js compile"
   },
   "main": "background.js",
   "dependencies": {

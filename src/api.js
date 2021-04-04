@@ -1,11 +1,16 @@
+import camera_cpp_api from 'node-loader!./addon/stereo-camera-api.node'
+
 function camera_connect(id) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve({'id':id});
-        }, 2000);
+    return new Promise((resolve,reject) => {
+        console.log('do connect')
+        try{
+            var status = camera_cpp_api.query_camera_cpp(id)
+            resolve(status)
+        }catch(err){
+            reject(err)
+        }
+
     });
 }
 
-module.exports = {
-    camera_connect: camera_connect
-};
+export {camera_connect}

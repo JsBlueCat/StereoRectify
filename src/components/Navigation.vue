@@ -2,22 +2,23 @@
   <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent app>
     <v-list-item class="px-2">
       <v-list-item-avatar>
-        <span class="group pa-5" :class="camera1_color">
-          <v-icon>mdi-video</v-icon>
+        <span class="group pa-5" :class="camera1.camera_connect==true?'teal':'deep-orange accent-4'">
+          <v-icon v-show="camera1.camera_connect==true">mdi-video</v-icon>
+          <v-icon v-show="camera1.camera_connect==false">mdi-video-off</v-icon>
         </span>
       </v-list-item-avatar>
 
       <v-list-item-title>
-        <v-badge bordered :color="camera1_color" icon="mdi-lan-connect" overlap>
+        <v-badge bordered :color="camera1.camera_connect==true?'teal':'deep-orange accent-4'" icon="mdi-lan-connect" overlap>
           <v-btn
             class="white--text"
-            :color="camera1_color"
+            :color="camera1.camera_connect==true?'teal':'deep-orange accent-4'"
             @click="connect_camera(1)"
             depressed
           >
-            192.168.0.22
+            192.168.0.207
             <v-progress-circular
-              v-if="camera1_show"
+              v-if="camera1.camera_show"
               indeterminate
               :width="3"
               :size="20"
@@ -35,22 +36,23 @@
 
     <v-list-item class="px-2">
       <v-list-item-avatar>
-        <span class="group pa-5" :class="camera2_color">
-          <v-icon>mdi-video-off</v-icon>
+        <span class="group pa-5" :class="camera2.camera_connect==true?'teal':'deep-orange accent-4'">
+          <v-icon v-show="camera2.camera_connect==true">mdi-video</v-icon>
+          <v-icon v-show="camera2.camera_connect==false">mdi-video-off</v-icon>
         </span>
       </v-list-item-avatar>
 
       <v-list-item-title>
-        <v-badge bordered :color="camera2_color" icon="mdi-lan-connect" overlap>
+        <v-badge bordered :color="camera2.camera_connect==true?'teal':'deep-orange accent-4'" icon="mdi-lan-connect" overlap>
           <v-btn
             class="white--text"
-            :color="camera2_color"
+            :color="camera2.camera_connect==true?'teal':'deep-orange accent-4'"
             depressed
             @click="connect_camera(2)"
           >
-            192.168.0.33
+            192.168.0.112
             <v-progress-circular
-              v-if="camera2_show"
+              v-if="camera2.camera_show"
               indeterminate
               :width="3"
               :size="20"
@@ -105,27 +107,40 @@ export default {
         { title: "参数检验", icon: "mdi-test-tube", to: { name: "RealTime" } },
       ],
       mini: true,
-      camera1_color: "teal",
-      camera2_color: "deep-orange accent-4",
-      camera1_show: false,
-      camera2_show: false,
+      // teal | deep-orange accent-4
+      camera1:{
+        camera_show: false,
+        camera_connect: false
+      },
+      camera2:{
+        camera_show: false,
+        camera_connect: false
+      }
     };
   },
   methods: {
     connect_camera(id) {
       this.total_camera(id);
-      ipcRenderer.invoke("connect-camera", id).then((result) => {
+      ipcRenderer.invoke("connectCameraIpc", id).then((result) => {
         this.total_camera(id);
+        switch(id){
+          case 1:
+            this.camera1.camera_connect = result
+            break;
+          case 2:
+            this.camera2.camera_connect = result
+            break;
+        }
         console.log(result);
       });
     },
     total_camera(id) {
       switch (id) {
         case 1:
-          this.camera1_show = !this.camera1_show;
+          this.camera1.camera_show = !this.camera1.camera_show;
           break;
         case 2:
-          this.camera2_show = !this.camera2_show;
+          this.camera2.camera_show = !this.camera2.camera_show;
           break;
       }
     },
