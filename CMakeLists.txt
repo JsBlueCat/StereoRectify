@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 3.9)
 cmake_policy(SET CMP0042 NEW)
 
 project (stereo-camera-api)
-include_directories(${CMAKE_JS_INC} "${PROJECT_SOURCE_DIR}/stereo-camera-lib/package/include/")
-# include_directories("stereo-camera-lib/package/include")
-FILE(GLOB HEADERS_FILE "stereo-camera-lib/package/include/*")
-FILE(GLOB STEAEOLIB "stereo-camera-lib/package/lib/*")
+include_directories(${CMAKE_JS_INC} "${PROJECT_SOURCE_DIR}/StereoCameraLib/package/include/")
+# include_directories("StereoCameraLib/package/include")
+FILE(GLOB HEADERS_FILE "StereoCameraLib/package/include/*")
+FILE(GLOB STEAEOLIB "StereoCameraLib/package/lib/*")
 MESSAGE(STATUS "find the current stereo-lib is ${STEAEOLIB}")
 
 # Find OpenCV, you may need to set OpenCV_DIR variable

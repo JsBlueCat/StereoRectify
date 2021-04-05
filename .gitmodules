@@ -1,0 +1,3 @@
+[submodule "StereoCameraLib"]
+	path = StereoCameraLib
+	url = https://github.com/JsBlueCat/StereoCameraLib.git
