@@ -99,16 +99,19 @@ if (isDevelopment) {
 }
 
 const { ipcMain } = require('electron')
+
+var addon = require('bindings')('api');
+
 // import {camera_connect} from './api.js'
 
 // console.log(camera_connect)
 
-ipcMain.handle('connectCameraIpc', (event, id) => {
-  camera_connect(id).then(status=>{
-    console.log(status)
-    return status
-  }).then(rej => {
-    console.log(rej)
-  })
+// ipcMain.handle('connectCameraIpc', (event, id) => {
+//   camera_connect(id).then(status=>{
+//     console.log(status)
+//     return status
+//   }).then(rej => {
+//     console.log(rej)
+//   })
   
-})
+// })
