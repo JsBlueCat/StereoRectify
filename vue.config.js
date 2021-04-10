@@ -5,7 +5,12 @@ module.exports = {
   pluginOptions:{
     electronBuilder:{
       nodeIntegration:true,
-      externals:["stereo_camera_api.node"]
+      externals:[
+        "path",
+        "bindings",
+        "api.node",
+        "dirname"
+      ]
     }
   }
 }

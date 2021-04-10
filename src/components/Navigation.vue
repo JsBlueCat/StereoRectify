@@ -122,6 +122,7 @@ export default {
     connect_camera(id) {
       this.total_camera(id);
       ipcRenderer.invoke("connectCameraIpc", id).then((result) => {
+        console.log(result)
         this.total_camera(id);
         switch(id){
           case 1:
@@ -131,7 +132,6 @@ export default {
             this.camera2.camera_connect = result
             break;
         }
-        console.log(result);
       });
     },
     total_camera(id) {

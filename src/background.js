@@ -2,7 +2,6 @@
 // import camera_cpp_api from 'node-loader!./addon/stereo-camera-api.node'
 // console.log(camera_cpp_api)
 // console.log(camera_cpp_api.connect_camera_cpp())
-
 import { app, protocol, BrowserWindow, Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
@@ -99,19 +98,13 @@ if (isDevelopment) {
 }
 
 const { ipcMain } = require('electron')
+// const path = require("path")
+// var addon = require('bindings')('api.node');
+// console.log(addon.query_camera_cpp(1));
+import {camera_connect} from './api.js'
 
-var addon = require('bindings')('api');
+console.log(camera_connect)
 
-// import {camera_connect} from './api.js'
-
-// console.log(camera_connect)
-
-// ipcMain.handle('connectCameraIpc', (event, id) => {
-//   camera_connect(id).then(status=>{
-//     console.log(status)
-//     return status
-//   }).then(rej => {
-//     console.log(rej)
-//   })
-  
-// })
+ipcMain.handle('connectCameraIpc', (event, id) => {
+  return camera_connect(id)
+})

@@ -17,6 +17,7 @@ electorn-fix start
 # 启动项目
 
 ```
+.\node_modules\.bin\electron-rebuild.cmd
 npm run electron:serve
 ```
 
