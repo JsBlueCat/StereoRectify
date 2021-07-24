@@ -1,42 +1,31 @@
-#include <napi.h>
 #include "hikvision_double_camera.h"
+#include "debug.h"
+#include <napi.h>
 
-static Napi::String StartCamera(const Napi::CallbackInfo &info)
-{
+
+static Napi::String StartCamera(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
-  try
-  {
-    StereoCamera *cam = StereoCamera::GetInstance();
-    return Napi::String::New(env, "starting connecting camera\n");
-  }
-  catch (std::exception &ex)
-  {
-    return Napi::String::New(env, "starting connecting camera\n");
-  }
+  auto cam = StereoCamera::GetInstance();
+  return Napi::String::New(env, "starting connecting camera\n");
 }
 
-static Napi::Boolean QueryCamera(const Napi::CallbackInfo &info)
-{
+static Napi::Boolean QueryCamera(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   int id = info[0].As<Napi::Number>().Int32Value();
-  StereoCamera *cam = StereoCamera::GetInstance();
-  bool status = cam->QueryCamera(id);
-  if (!status)
-  {
-    delete StereoCamera::instance;
+  std::shared_ptr<StereoCamera> cam = StereoCamera::GetInstance();
+  auto err = cam->QueryCamera(id);
+  if(err == ErrorInfo::CamNotFound || err == ErrorInfo::CamNotConnected || err == ErrorInfo::CamNotReady){
     StereoCamera::instance = nullptr;
   }
-  return Napi::Boolean::New(env, status);
+  return Napi::Boolean::New(env, err == ErrorInfo::Success);
 }
 
-static Napi::Boolean CaptureStereo(const Napi::CallbackInfo &info)
-{
+static Napi::Boolean CaptureStereo(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   return Napi::Boolean::New(env, true);
 }
 
-static Napi::Object Init(Napi::Env env, Napi::Object exports)
-{
+static Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports.Set(Napi::String::New(env, "connect_camera_cpp"),
               Napi::Function::New(env, StartCamera));
 

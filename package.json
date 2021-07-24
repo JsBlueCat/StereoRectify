@@ -6,12 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "cc": "npm run prebuild && cd D:\\stereoRectify && cmake-js compile --debug  && cmake-js configure --debug && cmake-js compile --debug ",
+    "cc": "npm run prebuild",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "prebuild": "cd StereoCameraLib/build && cmake -G \"Visual Studio 16 2019\" -DOpenCV_DIR=\"D:\\opencv-3.4.7\\build\" -DCMAKE_CXX_FLAGS=/D_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING .. && cmake --build . && cmake --install . --config Debug"
+    "prebuild": "cmake -A x64 -G \"Visual Studio 16 2019\" -DOpenCV_DIR=\"D:\\opencv-3.4.7\\build\" -S StereoCameraLib -B StereoCameraLib\\build && cmake --build  StereoCameraLib\\build --config=Release && cmake --install  StereoCameraLib\\build --config=Release"
   },
   "main": "background.js",
   "dependencies": {
